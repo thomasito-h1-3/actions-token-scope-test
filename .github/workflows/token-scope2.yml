@@ -1,0 +1,10 @@
+name: token-scope-test2
+on: workflow_dispatch
+permissions:
+  id-token: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: dump env
+        run: env | grep -Ei "ACTIONS_|GITHUB_TOKEN|RUNTIME" | sed "s/=.*/=<redacted-locally-for-safety-check-presence-only>/"
