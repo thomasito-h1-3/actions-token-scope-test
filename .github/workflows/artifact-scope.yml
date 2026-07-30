@@ -1,0 +1,11 @@
+name: artifact-scope-test
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "SECRET ARTIFACT CONTENT FOR SCOPE TEST" > secret.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scope-test-artifact
+          path: secret.txt
