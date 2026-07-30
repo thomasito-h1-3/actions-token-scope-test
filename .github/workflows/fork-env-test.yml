@@ -1,0 +1,10 @@
+name: fork-env-secret-test
+on: pull_request
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: prod-fork-test
+    steps:
+      - run: echo "PROD_SECRET length is ${#PROD_SECRET}"
+        env:
+          PROD_SECRET: ${{ secrets.PROD_SECRET }}
