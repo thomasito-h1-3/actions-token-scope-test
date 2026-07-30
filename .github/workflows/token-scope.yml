@@ -1,0 +1,14 @@
+name: token-scope-test
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: dump token claims
+        run: |
+          echo "Own run ID: $GITHUB_RUN_ID, repo: $GITHUB_REPOSITORY"
+          PAYLOAD=$(echo "$ACTIONS_RUNTIME_TOKEN" | cut -d"." -f2)
+          MOD=$(( ${#PAYLOAD} % 4 ))
+          if [ "$MOD" -eq 2 ]; then PAYLOAD="${PAYLOAD}=="; fi
+          if [ "$MOD" -eq 3 ]; then PAYLOAD="${PAYLOAD}="; fi
+          echo "$PAYLOAD" | base64 -d 2>/dev/null | python3 -m json.tool 2>/dev/null || echo "$PAYLOAD" | base64 -d
